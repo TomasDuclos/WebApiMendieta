@@ -73,16 +73,18 @@ namespace ApiABMCActivity.Controllers
         public string Patch(string id, [FromBody]Activity activityModify)
         {
             string confirmation = "Not found";
+            //Activity activity=new Activity();
             try
-            {               
+            {
                 Activity activity = activities.Find(x => string.Compare(x.Id, id) == 0);
                 if (activity!= null && activityModify!=null) 
                 {
-                    activity = activityModify;
-                    activity.Id = id;
+                    activities.Remove(activity);
+                    activityModify.Id=id;
+                    activities.Add(activityModify);
+
                     confirmation = "Modified";
                 }
-
             }
             catch (Exception)
             {
